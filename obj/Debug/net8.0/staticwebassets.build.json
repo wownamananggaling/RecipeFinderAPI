@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "20wshiahKc6xsvBWsradSx95rJFnrcfXOihH24zD61w=",
+  "Source": "RecipeFinderAPI",
+  "BasePath": "_content/RecipeFinderAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "RecipeFinderAPI\\wwwroot",
+      "Source": "RecipeFinderAPI",
+      "ContentRoot": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\",
+      "BasePath": "_content/RecipeFinderAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\app.js",
+      "SourceId": "RecipeFinderAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\",
+      "BasePath": "_content/RecipeFinderAPI",
+      "RelativePath": "app.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\app.js"
+    },
+    {
+      "Identity": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\index.html",
+      "SourceId": "RecipeFinderAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\",
+      "BasePath": "_content/RecipeFinderAPI",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\style.css",
+      "SourceId": "RecipeFinderAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\reyah\\RecipeFinderAPI\\wwwroot\\",
+      "BasePath": "_content/RecipeFinderAPI",
+      "RelativePath": "style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\style.css"
+    }
+  ]
+}
