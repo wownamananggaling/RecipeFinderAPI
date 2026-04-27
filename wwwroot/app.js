@@ -1,6 +1,10 @@
-const API = 'http://localhost:5225/api';
+const API = 'https://recipe-finder-api-ds4e.onrender.com/api';
 let token = localStorage.getItem('token') || '';
 let userId = parseInt(localStorage.getItem('userId') || '0');
+
+function showNav(visible) {
+  document.getElementById('nav-links').style.display = visible ? 'flex' : 'none';
+}
 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -13,6 +17,7 @@ function logout() {
   token = ''; userId = 0;
   localStorage.removeItem('token');
   localStorage.removeItem('userId');
+  showNav(false);
   showPage('login');
 }
 
@@ -32,6 +37,7 @@ async function login() {
   userId = data.userId || 1;
   localStorage.setItem('token', token);
   localStorage.setItem('userId', userId);
+  showNav(true);
   showPage('search');
 }
 
@@ -47,6 +53,7 @@ async function register() {
     document.getElementById('reg-error').textContent = 'Registration failed.';
     return;
   }
+  alert('Registered successfully! Please login.');
   showPage('login');
 }
 
@@ -112,11 +119,12 @@ function showDetail(meal) {
 }
 
 async function addFavorite(mealId, mealName, mealThumb) {
-  await fetch(`${API}/favorites`, {
+  const res = await fetch(`${API}/favorites`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ userId, mealId, mealName, mealThumb })
   });
-  alert('Saved to favorites!');
+  if (res.ok) alert('Saved to favorites!');
+  else alert('Already in favorites or error saving.');
 }
 
 async function loadFavorites() {
@@ -159,14 +167,19 @@ async function savePreferences() {
     preferredCuisine: document.getElementById('pref-cuisine').value,
     maxCookingTime: parseInt(document.getElementById('pref-time').value) || 60
   };
-  await fetch(`${API}/preferences`, {
+  const res = await fetch(`${API}/preferences`, {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify(pref)
   });
-  document.getElementById('pref-msg').textContent = 'Preferences saved!';
+  if (res.ok) document.getElementById('pref-msg').textContent = 'Preferences saved!';
 }
 
 window.onload = () => {
-  if (token) showPage('search');
-  else showPage('login');
+  if (token) {
+    showNav(true);
+    showPage('search');
+  } else {
+    showNav(false);
+    showPage('login');
+  }
 };
