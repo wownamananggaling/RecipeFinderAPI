@@ -9,36 +9,36 @@
 <body>
 
 <nav>
-  <span class="logo">Recipe Finder</span>
+  <span class="logo">🍽️ Recipe Finder</span>
   <div id="nav-links">
-    <a href="#" onclick="showPage('search')">Search</a>
-    <a href="#" onclick="showPage('favorites')">Favorites</a>
-    <a href="#" onclick="showPage('preferences')">Preferences</a>
-    <a href="#" onclick="logout()">Logout</a>
+    <a href="#" onclick="showPage('search')">🔍 Search</a>
+    <a href="#" onclick="showPage('favorites')">❤️ Favorites</a>
+    <a href="#" onclick="showPage('preferences')">⚙️ Preferences</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
   </div>
 </nav>
 
 <!-- Login Page -->
 <div id="page-login" class="page active">
-  <div class="card auth-card">
-    <h2>Welcome Back</h2>
+  <div class="auth-card">
+    <h2>👋 Welcome Back</h2>
     <input type="email" id="login-email" placeholder="Email" />
     <input type="password" id="login-password" placeholder="Password" />
     <button onclick="login()">Login</button>
-    <p>No account? <a href="#" onclick="showPage('register')">Register</a></p>
+    <p>No account? <a href="#" onclick="showPage('register')">Register here</a></p>
     <p id="login-error" class="error"></p>
   </div>
 </div>
 
 <!-- Register Page -->
 <div id="page-register" class="page">
-  <div class="card auth-card">
-    <h2>Create Account</h2>
+  <div class="auth-card">
+    <h2>🆕 Create Account</h2>
     <input type="text" id="reg-username" placeholder="Username" />
     <input type="email" id="reg-email" placeholder="Email" />
     <input type="password" id="reg-password" placeholder="Password" />
     <button onclick="register()">Register</button>
-    <p>Have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+    <p>Have an account? <a href="#" onclick="showPage('login')">Login here</a></p>
     <p id="reg-error" class="error"></p>
   </div>
 </div>
@@ -50,31 +50,35 @@
     <button onclick="searchRecipes()">Search</button>
   </div>
   <div class="filter-bar">
-    <input type="text" id="ingredients" placeholder="Ingredients (e.g. chicken, garlic)" />
-    <input type="text" id="dietary" placeholder="Dietary (e.g. vegetarian)" />
-    <input type="text" id="cuisine" placeholder="Cuisine (e.g. Italian)" />
-    <button onclick="filterRecipes()">Filter</button>
-    <button onclick="getRandom()">Random</button>
+    <h4>🔧 Filter Recipes</h4>
+    <div class="filter-row">
+      <input type="text" id="ingredients" placeholder="Ingredients (e.g. chicken, garlic)" />
+      <input type="text" id="dietary" placeholder="Dietary (e.g. vegetarian)" />
+      <input type="text" id="cuisine" placeholder="Cuisine (e.g. Italian)" />
+    </div>
+    <div class="filter-buttons">
+      <button class="btn-filter" onclick="filterRecipes()">🔍 Filter</button>
+      <button class="btn-random" onclick="getRandom()">🎲 Random</button>
+    </div>
   </div>
   <div id="recipe-results" class="grid"></div>
 </div>
 
 <!-- Detail Page -->
 <div id="page-detail" class="page">
-  <button onclick="showPage('search')" class="back-btn">Back</button>
   <div id="recipe-detail"></div>
 </div>
 
 <!-- Favorites Page -->
 <div id="page-favorites" class="page">
-  <h2>My Favorites</h2>
+  <h2>❤️ My Favorites</h2>
   <div id="favorites-list" class="grid"></div>
 </div>
 
 <!-- Preferences Page -->
 <div id="page-preferences" class="page">
-  <div class="card" style="max-width:500px;margin:2rem auto">
-    <h2>My Preferences</h2>
+  <div class="pref-card">
+    <h2>⚙️ My Preferences</h2>
     <label>Dietary Type</label>
     <input type="text" id="pref-dietary" placeholder="e.g. vegetarian, vegan" />
     <label>Excluded Ingredients</label>
@@ -86,6 +90,22 @@
     <button onclick="savePreferences()">Save Preferences</button>
     <p id="pref-msg" class="success"></p>
   </div>
+</div>
+
+<!-- Bottom Nav (mobile only) -->
+<div id="bottom-nav-bar" class="bottom-nav">
+  <a href="#" onclick="showPage('search')" id="bnav-search">
+    <span>🔍</span>Search
+  </a>
+  <a href="#" onclick="showPage('favorites')" id="bnav-favorites">
+    <span>❤️</span>Favorites
+  </a>
+  <a href="#" onclick="showPage('preferences')" id="bnav-preferences">
+    <span>⚙️</span>Preferences
+  </a>
+  <a href="#" onclick="logout()" id="bnav-logout">
+    <span>🚪</span>Logout
+  </a>
 </div>
 
 <script src="app.js"></script>

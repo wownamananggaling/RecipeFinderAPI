@@ -4,11 +4,15 @@ let userId = parseInt(localStorage.getItem('userId') || '0');
 
 function showNav(visible) {
   document.getElementById('nav-links').style.display = visible ? 'flex' : 'none';
+  document.getElementById('bottom-nav-bar').style.display = visible ? 'flex' : 'none';
 }
 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+  const bnav = document.getElementById('bnav-' + name);
+  if (bnav) bnav.classList.add('active');
   if (name === 'favorites') loadFavorites();
   if (name === 'preferences') loadPreferences();
 }
@@ -53,7 +57,7 @@ async function register() {
     document.getElementById('reg-error').textContent = 'Registration failed.';
     return;
   }
-  alert('Registered successfully! Please login.');
+  alert('Registered! Please login.');
   showPage('login');
 }
 
@@ -89,12 +93,12 @@ function renderRecipes(meals) {
   }
   grid.innerHTML = meals.map(m => `
     <div class="recipe-card" onclick="viewDetail('${m.idMeal}')">
-      <img src="${m.strMealThumb}" alt="${m.strMeal}" />
+      <img src="${m.strMealThumb}" alt="${m.strMeal}" loading="lazy"/>
       <div class="recipe-card-body">
         <h3>${m.strMeal}</h3>
         <p>${m.strCategory} | ${m.strArea}</p>
-        <button onclick="event.stopPropagation();addFavorite('${m.idMeal}','${m.strMeal}','${m.strMealThumb}')">
-          Save
+        <button class="save-btn" onclick="event.stopPropagation();addFavorite('${m.idMeal}','${m.strMeal}','${m.strMealThumb}')">
+          ❤️ Save
         </button>
       </div>
     </div>`).join('');
@@ -108,13 +112,19 @@ async function viewDetail(id) {
 
 function showDetail(meal) {
   document.getElementById('recipe-detail').innerHTML = `
-    <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-    <h2>${meal.strMeal}</h2>
-    <p><strong>Category:</strong> ${meal.strCategory} | <strong>Cuisine:</strong> ${meal.strArea}</p>
-    <p>${meal.strInstructions}</p>
-    <button onclick="addFavorite('${meal.idMeal}','${meal.strMeal}','${meal.strMealThumb}')">
-      Save to Favorites
-    </button>`;
+    <img class="detail-img" src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+    <div class="detail-content">
+      <h2>${meal.strMeal}</h2>
+      <div class="detail-meta">
+        <span class="badge">🍽️ ${meal.strCategory}</span>
+        <span class="badge">🌍 ${meal.strArea}</span>
+      </div>
+      <div class="detail-actions">
+        <button class="btn-back" onclick="showPage('search')">← Back</button>
+        <button class="btn-save" onclick="addFavorite('${meal.idMeal}','${meal.strMeal}','${meal.strMealThumb}')">❤️ Save</button>
+      </div>
+      <p>${meal.strInstructions}</p>
+    </div>`;
   showPage('detail');
 }
 
@@ -123,8 +133,8 @@ async function addFavorite(mealId, mealName, mealThumb) {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ userId, mealId, mealName, mealThumb })
   });
-  if (res.ok) alert('Saved to favorites!');
-  else alert('Already in favorites or error saving.');
+  if (res.ok) alert('❤️ Saved to favorites!');
+  else alert('Already in favorites!');
 }
 
 async function loadFavorites() {
@@ -132,14 +142,14 @@ async function loadFavorites() {
   const favs = await res.json();
   const list = document.getElementById('favorites-list');
   if (!favs || favs.length === 0) {
-    list.innerHTML = '<p>No favorites yet.</p>'; return;
+    list.innerHTML = '<p>No favorites yet. Start saving recipes!</p>'; return;
   }
   list.innerHTML = favs.map(f => `
     <div class="recipe-card">
-      <img src="${f.mealThumb}" alt="${f.mealName}" />
+      <img src="${f.mealThumb}" alt="${f.mealName}" loading="lazy"/>
       <div class="recipe-card-body">
         <h3>${f.mealName}</h3>
-        <button onclick="removeFavorite('${f.mealId}')">Remove</button>
+        <button class="save-btn" onclick="removeFavorite('${f.mealId}')">🗑️ Remove</button>
       </div>
     </div>`).join('');
 }
@@ -171,15 +181,10 @@ async function savePreferences() {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify(pref)
   });
-  if (res.ok) document.getElementById('pref-msg').textContent = 'Preferences saved!';
+  if (res.ok) document.getElementById('pref-msg').textContent = '✅ Preferences saved!';
 }
 
 window.onload = () => {
-  if (token) {
-    showNav(true);
-    showPage('search');
-  } else {
-    showNav(false);
-    showPage('login');
-  }
+  if (token) { showNav(true); showPage('search'); }
+  else { showNav(false); showPage('login'); }
 };
