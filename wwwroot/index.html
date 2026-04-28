@@ -3,65 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Recipe Finder App</title>
+    <title>Professional Recipe Finder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-shell">
         <header class="main-header">
-            <div class="logo">Recipe <span>Finder</span></div>
-            <nav class="header-nav">
-                <button class="nav-icon" onclick="toggleSettings()"></button>
-            </nav>
+            <div class="brand">
+                <div class="logo-mark">C</div>
+                <h1>Professional Recipe Finder</h1>
+            </div>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
         </header>
 
-        <main class="main-layout">
-            <section class="input-panel">
+        <div class="layout-wrapper">
+            <aside class="sidebar" id="sidebar">
                 <div class="card">
-                    <h3>Ingredient Matcher</h3>
-                    <p class="helper-text">Add ingredients to find recipes you can cook now.</p>
+                    <h3>My Pantry</h3>
+                    <p class="small-text">Add ingredients you have on hand.</p>
                     <div class="input-row">
-                        <input type="text" id="ingInput" placeholder="Enter ingredient...">
-                        <button class="btn-add" onclick="addIng()">Add</button>
+                        <input type="text" id="ingInput" placeholder="e.g. Chicken">
+                        <button class="btn-primary" onclick="addIngredient()">Add</button>
                     </div>
-                    <div id="ingList" class="tag-cloud"></div>
+                    <div id="pantryTags" class="tag-container"></div>
                 </div>
 
                 <div class="card">
-                    <h3>User Preferences</h3>
-                    <div class="pref-group">
-                        <label>Dietary Filter</label>
-                        <select id="dietPref" onchange="runMatch()">
+                    <h3>Preferences</h3>
+                    <div class="field">
+                        <label>Dietary Requirement</label>
+                        <select id="dietPref" onchange="updateRecipes()">
                             <option value="All">All Diets</option>
-                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Vegetarian">Vegetarian Only</option>
                             <option value="Non-Veg">Non-Vegetarian</option>
                         </select>
                     </div>
-                    <div class="pref-group">
+                    <div class="field">
                         <label>Max Cooking Time</label>
-                        <select id="timePref" onchange="runMatch()">
+                        <select id="timePref" onchange="updateRecipes()">
                             <option value="999">Any Time</option>
                             <option value="20">Under 20 mins</option>
                             <option value="45">Under 45 mins</option>
+                            <option value="60">Under 60 mins</option>
                         </select>
                     </div>
                 </div>
-            </section>
+            </aside>
 
-            <section class="results-panel">
-                <div class="results-header">
-                    <h2 id="matchCount">Available Recipes</h2>
+            <main class="main-content">
+                <div class="status-bar">
+                    <h2 id="matchCount">Finding recipes...</h2>
                 </div>
-                <div id="recipeGrid" class="recipe-grid"></div>
-            </section>
-        </main>
+                <div class="recipe-grid" id="recipeGrid">
+                    </div>
+            </main>
+        </div>
 
-        <nav class="mobile-nav">
-            <button class="tab active">Explore</button>
-            <button class="tab">Saved</button>
-            <button class="tab">Profile</button>
+        <nav class="bottom-nav">
+            <button class="nav-tab active" onclick="switchView('match')">Match</button>
+            <button class="nav-tab" onclick="switchView('favs')">Saved</button>
+            <button class="nav-tab" onclick="switchView('settings')">Settings</button>
         </nav>
     </div>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
     <script src="app.js"></script>
 </body>
 </html>
