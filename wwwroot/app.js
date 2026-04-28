@@ -98,7 +98,7 @@ function renderRecipes(meals) {
         <h3>${m.strMeal}</h3>
         <p>${m.strCategory} | ${m.strArea}</p>
         <button class="save-btn" onclick="event.stopPropagation();addFavorite('${m.idMeal}','${m.strMeal}','${m.strMealThumb}')">
-          ❤️ Save
+           Save
         </button>
       </div>
     </div>`).join('');
@@ -116,8 +116,8 @@ function showDetail(meal) {
     <div class="detail-content">
       <h2>${meal.strMeal}</h2>
       <div class="detail-meta">
-        <span class="badge">🍽️ ${meal.strCategory}</span>
-        <span class="badge">🌍 ${meal.strArea}</span>
+        <span class="badge"> ${meal.strCategory}</span>
+        <span class="badge"> ${meal.strArea}</span>
       </div>
       <div class="detail-actions">
         <button class="btn-back" onclick="showPage('search')">← Back</button>
@@ -133,7 +133,7 @@ async function addFavorite(mealId, mealName, mealThumb) {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ userId, mealId, mealName, mealThumb })
   });
-  if (res.ok) alert('❤️ Saved to favorites!');
+  if (res.ok) alert('Saved to favorites!');
   else alert('Already in favorites!');
 }
 
@@ -149,7 +149,7 @@ async function loadFavorites() {
       <img src="${f.mealThumb}" alt="${f.mealName}" loading="lazy"/>
       <div class="recipe-card-body">
         <h3>${f.mealName}</h3>
-        <button class="save-btn" onclick="removeFavorite('${f.mealId}')">🗑️ Remove</button>
+        <button class="save-btn" onclick="removeFavorite('${f.mealId}')"> Remove</button>
       </div>
     </div>`).join('');
 }
@@ -181,7 +181,7 @@ async function savePreferences() {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify(pref)
   });
-  if (res.ok) document.getElementById('pref-msg').textContent = '✅ Preferences saved!';
+  if (res.ok) document.getElementById('pref-msg').textContent = ' Preferences saved!';
 }
 
 window.onload = () => {
