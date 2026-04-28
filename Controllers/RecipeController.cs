@@ -16,7 +16,7 @@ public class RecipeController : ControllerBase
     {
         if (string.IsNullOrWhiteSpace(q))
             return BadRequest("Search query is required.");
-        var meals = await _mealService.SearchMealsAsync(q);
+        var meals = await _mealService.SearchMealsAsync(q.Trim());
         return Ok(meals);
     }
 
@@ -32,13 +32,13 @@ public class RecipeController : ControllerBase
     public async Task<IActionResult> GetRandom()
     {
         var meal = await _mealService.GetRandomMealAsync();
+        if (meal == null) return NotFound();
         return Ok(meal);
     }
 
     [HttpGet("filter-by-ingredients")]
     public async Task<IActionResult> FilterByIngredients(
         [FromQuery] string ingredients,
-        [FromQuery] int? maxTime = null,
         [FromQuery] string? dietary = null,
         [FromQuery] string? cuisine = null)
     {
@@ -46,18 +46,16 @@ public class RecipeController : ControllerBase
             return BadRequest("Please provide at least one ingredient.");
 
         var ingredientList = ingredients
-            .Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(i => i.Trim().ToLower())
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(i => i.ToLower())
+            .Distinct()
             .ToList();
 
-        var allMeals = new List<Meal>();
-        foreach (var ingredient in ingredientList)
-        {
-            var results = await _mealService.SearchMealsAsync(ingredient);
-            allMeals.AddRange(results);
-        }
+        var tasks = ingredientList.Select(i => _mealService.SearchMealsAsync(i));
+        var results = await Task.WhenAll(tasks);
 
-        var matched = allMeals
+        var matched = results
+            .SelectMany(r => r)
             .GroupBy(m => m.IdMeal)
             .OrderByDescending(g => g.Count())
             .Select(g => g.First())
@@ -66,13 +64,13 @@ public class RecipeController : ControllerBase
         if (!string.IsNullOrWhiteSpace(dietary))
             matched = matched
                 .Where(m => m.StrCategory != null &&
-                    m.StrCategory.ToLower().Contains(dietary.ToLower()))
+                    m.StrCategory.Contains(dietary, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
         if (!string.IsNullOrWhiteSpace(cuisine))
             matched = matched
                 .Where(m => m.StrArea != null &&
-                    m.StrArea.ToLower().Contains(cuisine.ToLower()))
+                    m.StrArea.Contains(cuisine, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
         return Ok(matched);

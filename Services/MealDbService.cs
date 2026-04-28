@@ -1,8 +1,7 @@
 public class MealDbService
 {
     private readonly HttpClient _http;
-    private const string BaseUrl =
-        "https://www.themealdb.com/api/json/v1/1";
+    private const string BaseUrl = "https://www.themealdb.com/api/json/v1/1";
 
     public MealDbService(HttpClient http)
     {
@@ -12,13 +11,14 @@ public class MealDbService
     public async Task<List<Meal>> SearchMealsAsync(string query)
     {
         var response = await _http.GetFromJsonAsync<MealSearchResponse>(
-            $"{BaseUrl}/search.php?s={query}");
+            $"{BaseUrl}/search.php?s={Uri.EscapeDataString(query)}");
         return response?.Meals ?? new List<Meal>();
     }
-  public async Task<Meal?> GetMealByIdAsync(string id)
+
+    public async Task<Meal?> GetMealByIdAsync(string id)
     {
         var response = await _http.GetFromJsonAsync<MealSearchResponse>(
-            $"{BaseUrl}/lookup.php?i={id}");
+            $"{BaseUrl}/lookup.php?i={Uri.EscapeDataString(id)}");
         return response?.Meals?.FirstOrDefault();
     }
 

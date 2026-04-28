@@ -52,3 +52,11 @@ button { padding: 0.7rem 1.5rem; background: #e74c3c;
 
 .error { color: #e74c3c; }
 .success { color: #27ae60; }
+/* Additional improvements */
+.loading { color: #999; font-style: italic; }
+.btn-remove { background: #aaa; margin-left: 0.3rem; }
+.btn-remove:hover { background: #e74c3c; }
+#recipe-detail a { color: #e74c3c; font-weight: bold; }
+nav a { transition: opacity 0.2s; }
+nav a:hover { opacity: 0.8; text-decoration: none; }
+input:focus { outline: 2px solid #e74c3c; border-color: #e74c3c; }
