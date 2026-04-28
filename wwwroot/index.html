@@ -2,213 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#C0392B" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recipe Finder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div id="app">
-
-  <!-- ── Header ── -->
-  <header class="header">
-    <div class="header-brand">
-      Recipe Finder
-      <span>Discover &amp; Save Recipes</span>
-    </div>
-    <button class="hamburger" id="menuBtn" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
-
-  <!-- ── Nav Overlay ── -->
-  <div class="nav-overlay" id="navOverlay"></div>
-
-  <!-- ── Nav Drawer ── -->
-  <nav class="nav-drawer" id="navDrawer">
-    <div class="nav-drawer-header">
-      <h2>Menu</h2>
-      <button class="nav-close" id="navClose" aria-label="Close menu">&#x2715;</button>
-    </div>
-    <div class="nav-items">
-      <button class="nav-item active" data-page="search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        Search Recipes
-      </button>
-      <button class="nav-item" data-page="favorites">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        My Favorites
-      </button>
-      <button class="nav-item" data-page="prefs">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-        Preferences
-      </button>
-    </div>
-  </nav>
-
-  <!-- ── Search Page ── -->
-  <div class="page active" id="page-search">
-    <div class="search-bar-wrap">
-      <div class="search-input-row">
-        <input class="search-input" type="text" id="searchInput" placeholder="Search recipes, ingredients..." autocomplete="off" />
-        <button class="search-btn" id="searchBtn">Search</button>
-      </div>
-      <div class="filter-row" id="filterRow">
-        <button class="filter-chip active" data-filter="All">All</button>
-        <button class="filter-chip" data-filter="Chicken">Chicken</button>
-        <button class="filter-chip" data-filter="Seafood">Seafood</button>
-        <button class="filter-chip" data-filter="Vegetarian">Vegetarian</button>
-        <button class="filter-chip" data-filter="Beef">Beef</button>
-        <button class="filter-chip" data-filter="Dessert">Dessert</button>
-      </div>
-    </div>
-    <div class="recipe-grid" id="recipeGrid">
-      <div class="loading"><div class="spinner"></div></div>
-    </div>
+<nav>
+  <span class="logo">Recipe Finder</span>
+  <div id="nav-links">
+    <a href="#" onclick="showPage('search')">Search</a>
+    <a href="#" onclick="showPage('favorites')">Favorites</a>
+    <a href="#" onclick="showPage('preferences')">Preferences</a>
   </div>
+</nav>
 
-  <!-- ── Detail Page ── -->
-  <div class="page" id="page-detail">
-    <div class="detail-top-bar">
-      <button class="back-btn" id="backBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-        Back to results
-      </button>
-    </div>
-    <div class="detail-img-wrap" id="detailImgWrap">
-      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#c8956c" stroke-width="1.5" opacity="0.4">
-        <path d="M3 11l19-9-9 19-2-8-8-2z"/>
-      </svg>
-    </div>
-    <div class="detail-body">
-      <h1 class="detail-title" id="detailTitle"></h1>
-      <div class="detail-meta-row" id="detailMeta"></div>
-      <button class="fav-btn" id="favBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        <span id="favBtnText">Save to Favorites</span>
-      </button>
-      <div class="detail-section">
-        <div class="detail-section-title">Instructions</div>
-        <div id="detailSteps"></div>
-      </div>
-    </div>
+<!-- Login Page -->
+<div id="page-login" class="page active">
+  <div class="card auth-card">
+    <h2>Welcome Back</h2>
+    <input type="email" id="login-email" placeholder="Email" />
+    <input type="password" id="login-password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p>No account? <a href="#" onclick="showPage('register')">Register</a></p>
+    <p id="login-error" class="error"></p>
   </div>
+</div>
 
-  <!-- ── Favorites Page ── -->
-  <div class="page" id="page-favorites">
-    <div class="empty-state" id="favsEmpty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-      </svg>
-      <h3>No saved recipes yet</h3>
-      <p>Tap Save to Favorites on any recipe to access it quickly here.</p>
-    </div>
-    <div class="recipe-grid" id="favsGrid"></div>
+<!-- Register Page -->
+<div id="page-register" class="page">
+  <div class="card auth-card">
+    <h2>Create Account</h2>
+    <input type="text" id="reg-username" placeholder="Username" />
+    <input type="email" id="reg-email" placeholder="Email" />
+    <input type="password" id="reg-password" placeholder="Password" />
+    <button onclick="register()">Register</button>
+    <p>Have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+    <p id="reg-error" class="error"></p>
   </div>
+</div>
 
-  <!-- ── Preferences Page ── -->
-  <div class="page" id="page-prefs">
-    <div class="prefs-body">
-
-      <div class="pref-section">
-        <div class="pref-section-label">Dietary Preferences</div>
-        <div class="pref-card">
-          <div class="pref-row">
-            <div class="pref-label">
-              Vegetarian
-              <small>Exclude meat-based recipes</small>
-            </div>
-            <button class="toggle" data-pref="vegetarian" aria-label="Toggle vegetarian"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">
-              Vegan
-              <small>Exclude all animal products</small>
-            </div>
-            <button class="toggle" data-pref="vegan" aria-label="Toggle vegan"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">
-              Gluten Free
-              <small>Exclude gluten-containing ingredients</small>
-            </div>
-            <button class="toggle" data-pref="glutenFree" aria-label="Toggle gluten free"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">
-              Dairy Free
-              <small>Exclude dairy products</small>
-            </div>
-            <button class="toggle" data-pref="dairyFree" aria-label="Toggle dairy free"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="pref-section">
-        <div class="pref-section-label">Cuisine Preferences</div>
-        <div class="pref-card">
-          <div class="pref-row">
-            <div class="pref-label">Indian</div>
-            <button class="toggle on" data-pref="indian" aria-label="Toggle Indian"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">Asian</div>
-            <button class="toggle on" data-pref="asian" aria-label="Toggle Asian"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">Mediterranean</div>
-            <button class="toggle" data-pref="mediterranean" aria-label="Toggle Mediterranean"></button>
-          </div>
-          <div class="pref-row">
-            <div class="pref-label">Western</div>
-            <button class="toggle" data-pref="western" aria-label="Toggle Western"></button>
-          </div>
-        </div>
-      </div>
-
-      <button class="save-pref-btn" id="savePrefBtn">Save Preferences</button>
-
-    </div>
+<!-- Search Page -->
+<div id="page-search" class="page">
+  <div class="search-bar">
+    <input type="text" id="search-query" placeholder="Search recipes..." />
+    <button onclick="searchRecipes()">Search</button>
   </div>
+  <div class="filter-bar">
+    <input type="text" id="ingredients" placeholder="Ingredients (e.g. chicken, garlic)" />
+    <input type="text" id="dietary" placeholder="Dietary (e.g. vegetarian)" />
+    <input type="text" id="cuisine" placeholder="Cuisine (e.g. Italian)" />
+    <button onclick="filterRecipes()">Filter</button>
+    <button onclick="getRandom()">Random</button>
+  </div>
+  <div id="recipe-results" class="grid"></div>
+</div>
 
-  <!-- ── Bottom Navigation ── -->
-  <nav class="bottom-nav">
-    <button class="bottom-nav-item active" data-page="search" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <span>Search</span>
-    </button>
-    <button class="bottom-nav-item" data-page="favorites" aria-label="Favorites">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-      </svg>
-      <span>Favorites</span>
-    </button>
-    <button class="bottom-nav-item" data-page="prefs" aria-label="Preferences">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
-      <span>Preferences</span>
-    </button>
-  </nav>
+<!-- Detail Page -->
+<div id="page-detail" class="page">
+  <button onclick="showPage('search')" class="back-btn">Back</button>
+  <div id="recipe-detail"></div>
+</div>
 
-  <!-- ── Toast Notification ── -->
-  <div class="toast" id="toast"></div>
+<!-- Favorites Page -->
+<div id="page-favorites" class="page">
+  <h2>My Favorites</h2>
+  <div id="favorites-list" class="grid"></div>
+</div>
 
+<!-- Preferences Page -->
+<div id="page-preferences" class="page">
+  <div class="card" style="max-width:500px;margin:2rem auto">
+    <h2>My Preferences</h2>
+    <label>Dietary Type</label>
+    <input type="text" id="pref-dietary" placeholder="e.g. vegetarian, vegan" />
+    <label>Excluded Ingredients</label>
+    <input type="text" id="pref-excluded" placeholder="e.g. nuts, dairy" />
+    <label>Preferred Cuisine</label>
+    <input type="text" id="pref-cuisine" placeholder="e.g. Italian, Asian" />
+    <label>Max Cooking Time (minutes)</label>
+    <input type="number" id="pref-time" placeholder="e.g. 30" />
+    <button onclick="savePreferences()">Save Preferences</button>
+    <p id="pref-msg" class="success"></p>
+  </div>
 </div>
 
 <script src="app.js"></script>
