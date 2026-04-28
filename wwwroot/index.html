@@ -1,70 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Recipe Finder API</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Finder</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="app-shell">
-        <header class="main-header">
-            <div class="brand">
-                <div class="logo-mark">C</div>
-                <h1>Recipe Finder API</h1>
-            </div>
-            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-        </header>
 
-        <div class="layout-wrapper">
-            <aside class="sidebar" id="sidebar">
-                <div class="card">
-                    <h3>My Pantry</h3>
-                    <p class="small-text">Add ingredients to match with the API database.</p>
-                    <div class="input-row">
-                        <input type="text" id="ingInput" placeholder="e.g. Chicken">
-                        <button class="btn-primary" onclick="addIngredient()">Add</button>
-                    </div>
-                    <div id="pantryTags" class="tag-container"></div>
-                </div>
+<nav>
+  <span class="logo">Recipe Finder</span>
+  <div id="nav-links">
+    <a href="#" onclick="showPage('search')">Search</a>
+    <a href="#" onclick="showPage('favorites')">Favorites</a>
+    <a href="#" onclick="showPage('preferences')">Preferences</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
 
-                <div class="card">
-                    <h3>Preferences</h3>
-                    <div class="field">
-                        <label>Dietary Requirement</label>
-                        <select id="dietPref" onchange="fetchAndMatch()">
-                            <option value="All">All Diets</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Non-Veg">Non-Vegetarian</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Max Cooking Time</label>
-                        <select id="timePref" onchange="fetchAndMatch()">
-                            <option value="999">Any Time</option>
-                            <option value="30">Under 30 mins</option>
-                            <option value="60">Under 60 mins</option>
-                        </select>
-                    </div>
-                </div>
-            </aside>
+<!-- Login Page -->
+<div id="page-login" class="page active">
+  <div class="card auth-card">
+    <h2>Welcome Back</h2>
+    <input type="email" id="login-email" placeholder="Email" />
+    <input type="password" id="login-password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p>No account? <a href="#" onclick="showPage('register')">Register</a></p>
+    <p id="login-error" class="error"></p>
+  </div>
+</div>
 
-            <main class="main-content">
-                <div class="status-bar">
-                    <h2 id="matchCount">Connecting to API...</h2>
-                </div>
-                <div class="recipe-grid" id="recipeGrid">
-                    </div>
-            </main>
-        </div>
+<!-- Register Page -->
+<div id="page-register" class="page">
+  <div class="card auth-card">
+    <h2>Create Account</h2>
+    <input type="text" id="reg-username" placeholder="Username" />
+    <input type="email" id="reg-email" placeholder="Email" />
+    <input type="password" id="reg-password" placeholder="Password" />
+    <button onclick="register()">Register</button>
+    <p>Have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+    <p id="reg-error" class="error"></p>
+  </div>
+</div>
 
-        <nav class="bottom-nav">
-            <button class="nav-tab active">Match</button>
-            <button class="nav-tab">Saved</button>
-            <button class="nav-tab">Settings</button>
-        </nav>
-    </div>
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-    <script src="app.js"></script>
+<!-- Search Page -->
+<div id="page-search" class="page">
+  <div class="search-bar">
+    <input type="text" id="search-query" placeholder="Search recipes..." />
+    <button onclick="searchRecipes()">Search</button>
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="ingredients" placeholder="Ingredients (e.g. chicken, garlic)" />
+    <input type="text" id="dietary" placeholder="Dietary (e.g. vegetarian)" />
+    <input type="text" id="cuisine" placeholder="Cuisine (e.g. Italian)" />
+    <button onclick="filterRecipes()">Filter</button>
+    <button onclick="getRandom()">Random</button>
+  </div>
+  <div id="recipe-results" class="grid"></div>
+</div>
+
+<!-- Detail Page -->
+<div id="page-detail" class="page">
+  <button onclick="showPage('search')" class="back-btn">Back</button>
+  <div id="recipe-detail"></div>
+</div>
+
+<!-- Favorites Page -->
+<div id="page-favorites" class="page">
+  <h2>My Favorites</h2>
+  <div id="favorites-list" class="grid"></div>
+</div>
+
+<!-- Preferences Page -->
+<div id="page-preferences" class="page">
+  <div class="card" style="max-width:500px;margin:2rem auto">
+    <h2>My Preferences</h2>
+    <label>Dietary Type</label>
+    <input type="text" id="pref-dietary" placeholder="e.g. vegetarian, vegan" />
+    <label>Excluded Ingredients</label>
+    <input type="text" id="pref-excluded" placeholder="e.g. nuts, dairy" />
+    <label>Preferred Cuisine</label>
+    <input type="text" id="pref-cuisine" placeholder="e.g. Italian, Asian" />
+    <label>Max Cooking Time (minutes)</label>
+    <input type="number" id="pref-time" placeholder="e.g. 30" />
+    <button onclick="savePreferences()">Save Preferences</button>
+    <p id="pref-msg" class="success"></p>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
