@@ -1,4 +1,4 @@
-const API = '/api';
+const API = 'https://recipe-finder-api-ds4e.onrender.com/api';
 
 // Safe storage wrapper — never crashes even if storage is blocked
 const store = (() => {
@@ -328,6 +328,21 @@ document.addEventListener('keydown', e => {
     else if (active === 'page-search') searchRecipes();
   }
 });
+
+window.onload = () => {
+  if (token) {
+    showNav(true);
+    showPage('search');
+  } else {
+    showNav(false);
+    showPage('login');
+  }
+};
+
+    showPage('login');
+  }
+};ent = 'Preferences saved!';
+}
 
 window.onload = () => {
   if (token) {
