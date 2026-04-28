@@ -135,3 +135,5 @@ C:\Users\reyah\RecipeFinderAPI\obj\Debug\net8.0\RecipeFinderAPI.pdb
 C:\Users\reyah\RecipeFinderAPI\obj\Debug\net8.0\RecipeFinderAPI.genruntimeconfig.cache
 C:\Users\reyah\RecipeFinderAPI\obj\Debug\net8.0\ref\RecipeFinderAPI.dll
 C:\Users\reyah\RecipeFinderAPI\bin\Debug\net8.0\RecipeFinderAPI.staticwebassets.runtime.json
+C:\Users\reyah\RecipeFinderAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\reyah\RecipeFinderAPI\obj\Debug\net8.0\RecipeFinderAPI.sourcelink.json
