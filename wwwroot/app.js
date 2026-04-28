@@ -1,4 +1,4 @@
-const API = '/api';
+const API = 'https://recipe-finder-api-ds4e.onrender.com/api';
 let token = localStorage.getItem('token') || '';
 let userId = parseInt(localStorage.getItem('userId') || '0');
 
@@ -307,6 +307,40 @@ document.addEventListener('keydown', e => {
     else if (active === 'page-search') searchRecipes();
   }
 });
+
+window.onload = () => {
+  if (token) {
+    showNav(true);
+    showPage('search');
+  } else {
+    showNav(false);
+    showPage('login');
+  }
+};
+ent = 'Preferences saved!';
+}
+
+window.onload = () => {
+  if (token) {
+    showNav(true);
+    showPage('search');
+  } else {
+    showNav(false);
+    showPage('login');
+  }
+};ent = 'Preferences saved!';
+}
+
+window.onload = () => {
+  if (token) {
+    showNav(true);
+    showPage('search');
+  } else {
+    showNav(false);
+    showPage('login');
+  }
+};ent = 'Preferences saved!';
+}
 
 window.onload = () => {
   if (token) {
