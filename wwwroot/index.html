@@ -3,57 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Vanguard Culinary System</title>
+    <title>Vanguard Culinary Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-shell">
-        <aside class="sidebar">
-            <div class="sidebar-identity">
-                <div class="logo-mark">V</div>
-                <div class="logo-text">
-                    <h2>Vanguard</h2>
-                    <p>Professional Portal</p>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-link active" onclick="switchView('discover')">Recipe Matcher</a>
-                <a href="#" class="nav-link" onclick="switchView('saved')">Saved Recipes</a>
-                <a href="#" class="nav-link" onclick="switchView('settings')">Preferences</a>
+        <header class="main-header">
+            <div class="logo">Vanguard <span>Culinary</span></div>
+            <nav class="header-nav">
+                <button class="nav-icon" onclick="toggleSettings()">⚙️</button>
             </nav>
-        </aside>
+        </header>
 
-        <main class="main-container">
-            <header class="content-header">
-                <h1>Smart Matcher</h1>
-                <p>Enter your available ingredients to find matching professional recipes.</p>
-                
-                <div class="input-section">
-                    <div class="search-bar">
-                        <input type="text" id="ingredientInput" placeholder="Add ingredient (e.g. Chicken, Tomato)...">
-                        <button class="btn-primary" onclick="addIngredient()">Add</button>
+        <main class="main-layout">
+            <section class="input-panel">
+                <div class="card">
+                    <h3>Ingredient Matcher</h3>
+                    <p class="helper-text">Add ingredients to find recipes you can cook now.</p>
+                    <div class="input-row">
+                        <input type="text" id="ingInput" placeholder="Enter ingredient...">
+                        <button class="btn-add" onclick="addIng()">Add</button>
                     </div>
-                    <div id="myIngredients" class="inventory-tags"></div>
+                    <div id="ingList" class="tag-cloud"></div>
                 </div>
 
-                <div class="filter-controls">
-                    <select id="timeFilter" onchange="runMatching()">
-                        <option value="all">Any Cooking Time</option>
-                        <option value="30">Under 30 mins</option>
-                        <option value="60">Under 60 mins</option>
-                    </select>
-                    <div id="preferenceDisplay" class="pref-badge"></div>
+                <div class="card">
+                    <h3>User Preferences</h3>
+                    <div class="pref-group">
+                        <label>Dietary Filter</label>
+                        <select id="dietPref" onchange="runMatch()">
+                            <option value="All">All Diets</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Non-Veg">Non-Vegetarian</option>
+                        </select>
+                    </div>
+                    <div class="pref-group">
+                        <label>Max Cooking Time</label>
+                        <select id="timePref" onchange="runMatch()">
+                            <option value="999">Any Time</option>
+                            <option value="20">Under 20 mins</option>
+                            <option value="45">Under 45 mins</option>
+                        </select>
+                    </div>
                 </div>
-            </header>
+            </section>
 
-            <section class="recipe-grid" id="recipeGrid">
-                </section>
+            <section class="results-panel">
+                <div class="results-header">
+                    <h2 id="matchCount">Available Recipes</h2>
+                </div>
+                <div id="recipeGrid" class="recipe-grid"></div>
+            </section>
         </main>
 
         <nav class="mobile-nav">
-            <button class="mobile-tab active" onclick="switchView('discover')">Match</button>
-            <button class="mobile-tab" onclick="switchView('saved')">Saved</button>
-            <button class="mobile-tab" onclick="switchView('settings')">Prefs</button>
+            <button class="tab active">Explore</button>
+            <button class="tab">Saved</button>
+            <button class="tab">Profile</button>
         </nav>
     </div>
     <script src="app.js"></script>
