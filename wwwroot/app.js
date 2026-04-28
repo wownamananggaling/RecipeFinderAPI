@@ -338,3 +338,9 @@ window.onload = () => {
     showPage('login');
   }
 };
+// ── Keep-alive: ping server every 10 min so Render doesn't spin down ──────────
+function keepAlive() {
+  fetch(`${API}/recipe/random`).catch(() => {});
+}
+setInterval(keepAlive, 10 * 60 * 1000); // every 10 minutes
+keepAlive(); // also ping immediately on page load to wake server up
