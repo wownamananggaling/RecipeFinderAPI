@@ -3,58 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Recipe Finder Professional</title>
+    <title>Vanguard Culinary Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-layout">
-        <header class="mobile-header">
-            <button class="menu-btn" onclick="toggleMenu()">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="logo">Recipe Finder</div>
-            <div class="spacer"></div>
-        </header>
-
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>Navigation</h2>
-                <button class="close-menu" onclick="toggleMenu()">✕</button>
+            <div class="sidebar-brand">
+                <h2>Vanguard</h2>
+                <span>Recipe Management</span>
             </div>
-            <nav class="nav-links">
-                <a href="#" class="active">Search Recipes</a>
-                <a href="#">My Favorites</a>
-                <a href="#">Dietary Settings</a>
-                <a href="#">Account</a>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" onclick="showPage('search')">Discover</a>
+                <a href="#" class="nav-link" onclick="showPage('favorites')">Saved Recipes</a>
+                <a href="#" class="nav-link" onclick="showPage('settings')">Preferences</a>
             </nav>
         </aside>
 
-        <main class="main-content">
-            <section class="search-section">
-                <div class="search-wrapper">
-                    <input type="text" placeholder="Find a recipe..." id="searchInput">
-                    <button id="searchBtn">Search</button>
-                </div>
-                <div class="chips-container">
-                    <span class="chip active">All</span>
-                    <span class="chip">Chicken</span>
-                    <span class="chip">Seafood</span>
-                    <span class="chip">Vegetarian</span>
-                </div>
-            </section>
+        <div class="main-wrapper">
+            <header class="mobile-top-bar">
+                <button class="icon-btn" onclick="toggleSidebar()">☰</button>
+                <div class="mobile-logo">Vanguard</div>
+                <div class="placeholder"></div>
+            </header>
 
-            <section class="results-grid" id="resultsGrid">
+            <main class="content-container">
+                <header class="page-header">
+                    <h1>Explore Recipes</h1>
+                    <p>Find your next professional meal inspiration.</p>
+                </header>
+
+                <section class="search-area">
+                    <div class="search-field">
+                        <input type="text" id="recipeInput" placeholder="Search ingredients or dishes...">
+                        <button class="primary-btn" onclick="executeSearch()">Search</button>
+                    </div>
+                    <div class="filter-pills">
+                        <button class="pill active">All</button>
+                        <button class="pill">Breakfast</button>
+                        <button class="pill">Main Course</button>
+                        <button class="pill">Desserts</button>
+                    </div>
                 </section>
-        </main>
 
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active">Search</a>
-            <a href="#" class="nav-item">Favorites</a>
-            <a href="#" class="nav-item">Settings</a>
+                <div class="recipe-grid" id="recipeGrid">
+                    </div>
+            </main>
+        </div>
+
+        <nav class="mobile-tab-bar">
+            <button class="tab active" onclick="showPage('search')">Explore</button>
+            <button class="tab" onclick="showPage('favorites')">Saved</button>
+            <button class="tab" onclick="showPage('settings')">Profile</button>
         </nav>
     </div>
 
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
     <script src="app.js"></script>
 </body>
 </html>

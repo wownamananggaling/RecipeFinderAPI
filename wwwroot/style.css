@@ -1,84 +1,78 @@
 :root {
     --primary: #C0392B;
-    --bg: #F4F7F6;
-    --white: #FFFFFF;
-    --text: #2D3436;
-    --sidebar-width: 260px;
+    --primary-hover: #A93226;
+    --bg-surface: #FFFFFF;
+    --bg-body: #F9FAFB;
+    --text-main: #1A1A1A;
+    --text-sub: #6B7280;
+    --border: #E5E7EB;
+    --radius: 12px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+body { background: var(--bg-body); color: var(--text-main); }
 
 .app-layout { display: flex; min-height: 100vh; }
 
-/* Desktop Sidebar */
+/* Sidebar Desktop */
 .sidebar {
-    width: var(--sidebar-width);
-    background: var(--white);
-    border-right: 1px solid #ddd;
+    width: 280px;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    padding: 32px 24px;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     position: sticky;
     top: 0;
-    height: 100vh;
 }
 
-.sidebar-header { padding: 20px; border-bottom: 1px solid #eee; }
-.close-menu { display: none; }
-.nav-links a { display: block; padding: 15px 20px; text-decoration: none; color: var(--text); font-weight: 500; }
-.nav-links a.active { color: var(--primary); background: #fdf2f2; border-right: 4px solid var(--primary); }
+.sidebar-brand h2 { color: var(--primary); font-size: 24px; letter-spacing: -0.5px; }
+.sidebar-brand span { font-size: 12px; color: var(--text-sub); text-transform: uppercase; }
+
+.nav-menu { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; }
+.nav-link { padding: 12px 16px; text-decoration: none; color: var(--text-main); font-weight: 500; border-radius: var(--radius); transition: 0.2s; }
+.nav-link.active { background: #fef2f2; color: var(--primary); }
+.nav-link:hover:not(.active) { background: #f3f4f6; }
 
 /* Main Content */
-.main-content { flex: 1; padding: 30px; }
-.search-wrapper { display: flex; gap: 10px; max-width: 600px; margin-bottom: 20px; }
-.search-wrapper input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; }
-.search-wrapper button { background: var(--primary); color: white; border: none; padding: 0 25px; border-radius: 8px; cursor: pointer; }
+.main-wrapper { flex: 1; display: flex; flex-direction: column; }
+.content-container { padding: 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-.chips-container { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 5px; }
-.chip { padding: 8px 18px; background: white; border: 1px solid #ddd; border-radius: 20px; font-size: 14px; white-space: nowrap; cursor: pointer; }
-.chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+.page-header h1 { font-size: 32px; font-weight: 700; }
+.page-header p { color: var(--text-sub); margin-top: 4px; }
+
+.search-area { margin-top: 32px; }
+.search-field { display: flex; gap: 12px; margin-bottom: 24px; }
+.search-field input { flex: 1; padding: 14px 20px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 16px; transition: 0.2s; }
+.search-field input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px #fef2f2; }
+
+.primary-btn { background: var(--primary); color: white; border: none; padding: 0 24px; border-radius: var(--radius); font-weight: 600; cursor: pointer; }
+
+.filter-pills { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+.pill { padding: 8px 20px; border-radius: 24px; border: 1px solid var(--border); background: white; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+.pill.active { background: var(--text-main); color: white; border-color: var(--text-main); }
+
+/* Grid & Cards */
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 24px; }
+.recipe-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: 0.3s; cursor: pointer; }
+.recipe-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -10px rgba(0,0,0,0.1); }
+.card-content { padding: 20px; }
+.card-tag { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+.card-title { font-size: 18px; font-weight: 600; margin-top: 4px; }
 
 /* Mobile Adaptations */
 @media (max-width: 768px) {
-    .sidebar {
-        position: fixed;
-        left: -100%;
-        z-index: 1000;
-        transition: 0.3s;
-    }
+    .sidebar { position: fixed; left: -280px; z-index: 1000; transition: 0.3s ease; }
     .sidebar.open { left: 0; }
-    .close-menu { display: block; background: none; border: none; font-size: 20px; }
-
-    .mobile-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        background: var(--primary);
-        color: white;
-        position: sticky;
-        top: 0;
-        z-index: 900;
-    }
-
-    .main-content { padding: 15px; padding-bottom: 80px; }
-
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 65px;
-        background: white;
-        display: flex;
-        border-top: 1px solid #ddd;
-        z-index: 900;
-    }
-    .nav-item { flex: 1; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #666; font-size: 12px; }
-    .nav-item.active { color: var(--primary); font-weight: bold; }
-
-    .overlay.open { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 950; }
+    .content-container { padding: 20px; }
+    .mobile-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: white; border-bottom: 1px solid var(--border); }
+    .mobile-tab-bar { position: fixed; bottom: 0; width: 100%; height: 64px; background: white; border-top: 1px solid var(--border); display: flex; z-index: 900; }
+    .tab { flex: 1; border: none; background: none; font-size: 12px; font-weight: 500; color: var(--text-sub); }
+    .tab.active { color: var(--primary); }
+    .overlay.open { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 950; }
 }
 
 @media (min-width: 769px) {
-    .mobile-header, .bottom-nav { display: none; }
+    .mobile-top-bar, .mobile-tab-bar { display: none; }
 }
