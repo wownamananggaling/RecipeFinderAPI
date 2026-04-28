@@ -56,7 +56,7 @@ function setError(id, msg) {
 
 function setLoading(containerId, loading) {
   const el = document.getElementById(containerId);
-  if (loading) el.innerHTML = '<p class="loading">Loading…</p>';
+  if (loading) el.innerHTML = '<p class="loading">Loading\u2026</p>';
 }
 
 function logout() {
@@ -192,7 +192,7 @@ function renderRecipes(meals) {
         <h3>${esc(m.strMeal)}</h3>
         <p>${esc(m.strCategory)} | ${esc(m.strArea)}</p>
         <button onclick="event.stopPropagation();addFavorite('${esc(m.idMeal)}','${esc(m.strMeal)}','${esc(m.strMealThumb)}')">
-          ♥ Save
+          \u2665 Save
         </button>
       </div>
     </div>`).join('');
@@ -210,7 +210,7 @@ async function viewDetail(id) {
 
 function showDetail(meal) {
   const youtubeLink = meal.strYoutube
-    ? `<a href="${esc(meal.strYoutube)}" target="_blank" rel="noopener">▶ Watch on YouTube</a>`
+    ? `<a href="${esc(meal.strYoutube)}" target="_blank" rel="noopener">\u25b6 Watch on YouTube</a>`
     : '';
   document.getElementById('recipe-detail').innerHTML = `
     <img src="${esc(meal.strMealThumb)}" alt="${esc(meal.strMeal)}" />
@@ -220,12 +220,12 @@ function showDetail(meal) {
     ${youtubeLink}
     <br/><br/>
     <button onclick="addFavorite('${esc(meal.idMeal)}','${esc(meal.strMeal)}','${esc(meal.strMealThumb)}')">
-      ♥ Save to Favorites
+      \u2665 Save to Favorites
     </button>`;
   showPage('detail');
 }
 
-// ── Favorites ─────────────────────────────────────────────────────────────────
+// ── Favorites ────────────────────────────────────────────────────────────────
 
 async function addFavorite(mealId, mealName, mealThumb) {
   if (!token) { alert('Please log in to save favorites.'); return; }
@@ -328,21 +328,6 @@ document.addEventListener('keydown', e => {
     else if (active === 'page-search') searchRecipes();
   }
 });
-
-window.onload = () => {
-  if (token) {
-    showNav(true);
-    showPage('search');
-  } else {
-    showNav(false);
-    showPage('login');
-  }
-};
-
-    showPage('login');
-  }
-};ent = 'Preferences saved!';
-}
 
 window.onload = () => {
   if (token) {
