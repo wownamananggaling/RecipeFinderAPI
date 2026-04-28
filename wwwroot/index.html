@@ -3,62 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Vanguard Culinary Portal</title>
+    <title>Vanguard Culinary System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <h2>Vanguard</h2>
-                <span>Recipe Management</span>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-identity">
+                <div class="logo-mark">V</div>
+                <div class="logo-text">
+                    <h2>Vanguard</h2>
+                    <p>Culinary Portal</p>
+                </div>
             </div>
-            <nav class="nav-menu">
-                <a href="#" class="nav-link active" onclick="showPage('search')">Discover</a>
-                <a href="#" class="nav-link" onclick="showPage('favorites')">Saved Recipes</a>
-                <a href="#" class="nav-link" onclick="showPage('settings')">Preferences</a>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" onclick="switchView('discover')">Discover</a>
+                <a href="#" class="nav-link" onclick="switchView('saved')">Saved Recipes</a>
+                <a href="#" class="nav-link" onclick="switchView('settings')">Settings</a>
             </nav>
         </aside>
 
-        <div class="main-wrapper">
-            <header class="mobile-top-bar">
-                <button class="icon-btn" onclick="toggleSidebar()">☰</button>
-                <div class="mobile-logo">Vanguard</div>
-                <div class="placeholder"></div>
+        <main class="main-container">
+            <header class="content-header">
+                <div class="header-titles">
+                    <h1>Explore Cuisine</h1>
+                    <p>Curated professional recipes for your collection.</p>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="recipeSearch" placeholder="Search by name or ingredient...">
+                    <button class="btn-primary" onclick="search()">Search</button>
+                </div>
+                <div class="filter-pills">
+                    <button class="pill active">All</button>
+                    <button class="pill">Breakfast</button>
+                    <button class="pill">Main Course</button>
+                    <button class="pill">Sides</button>
+                </div>
             </header>
 
-            <main class="content-container">
-                <header class="page-header">
-                    <h1>Explore Recipes</h1>
-                    <p>Find your next professional meal inspiration.</p>
-                </header>
-
-                <section class="search-area">
-                    <div class="search-field">
-                        <input type="text" id="recipeInput" placeholder="Search ingredients or dishes...">
-                        <button class="primary-btn" onclick="executeSearch()">Search</button>
-                    </div>
-                    <div class="filter-pills">
-                        <button class="pill active">All</button>
-                        <button class="pill">Breakfast</button>
-                        <button class="pill">Main Course</button>
-                        <button class="pill">Desserts</button>
-                    </div>
+            <section class="recipe-grid" id="recipeGrid">
                 </section>
+        </main>
 
-                <div class="recipe-grid" id="recipeGrid">
-                    </div>
-            </main>
-        </div>
-
-        <nav class="mobile-tab-bar">
-            <button class="tab active" onclick="showPage('search')">Explore</button>
-            <button class="tab" onclick="showPage('favorites')">Saved</button>
-            <button class="tab" onclick="showPage('settings')">Profile</button>
+        <nav class="mobile-nav">
+            <button class="mobile-tab active" onclick="switchView('discover')">Explore</button>
+            <button class="mobile-tab" onclick="switchView('saved')">Saved</button>
+            <button class="mobile-tab" onclick="switchView('settings')">Profile</button>
         </nav>
     </div>
 
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
     <script src="app.js"></script>
 </body>
 </html>

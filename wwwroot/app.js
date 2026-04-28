@@ -1,31 +1,23 @@
-const recipes = [
-    { title: "Gourmet Chicken Mandi", type: "Main Course", time: "60 min" },
-    { title: "Artisan Dal Makhani", type: "Vegetarian", time: "45 min" },
-    { title: "Pan-Seared Sea Bass", type: "Seafood", time: "30 min" }
+const recipeData = [
+    { name: "Saffron Infused Mandi", category: "Main Course", time: "55m" },
+    { name: "Velvet Dal Makhani", category: "Vegetarian", time: "40m" },
+    { name: "Citrus Glazed Bass", category: "Seafood", time: "30m" }
 ];
 
-function renderGrid() {
+function render() {
     const grid = document.getElementById('recipeGrid');
-    grid.innerHTML = recipes.map(r => `
+    grid.innerHTML = recipeData.map(r => `
         <div class="recipe-card">
-            <div class="card-content">
-                <span class="card-tag">${r.type}</span>
-                <h3 class="card-title">${r.title}</h3>
-                <p style="color: #6B7280; font-size: 13px; margin-top: 8px;">⏱ ${r.time}</p>
-            </div>
+            <span style="font-size: 11px; font-weight: 700; color: #C0392B; text-transform: uppercase; letter-spacing: 0.05em;">${r.category}</span>
+            <h3 style="margin: 8px 0; font-size: 20px; font-weight: 700;">${r.name}</h3>
+            <p style="color: #6B7280; font-size: 14px;">Preparation: ${r.time}</p>
         </div>
     `).join('');
 }
 
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('open');
+function switchView(view) {
+    console.log("Navigating to: " + view);
+    // Add logic to hide/show specific sections if needed
 }
 
-function executeSearch() {
-    const query = document.getElementById('recipeInput').value;
-    console.log("Searching for:", query);
-}
-
-// Initialize
-renderGrid();
+render();
