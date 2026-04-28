@@ -13,31 +13,36 @@
                 <div class="logo-mark">V</div>
                 <div class="logo-text">
                     <h2>Vanguard</h2>
-                    <p>Culinary Portal</p>
+                    <p>Professional Portal</p>
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="nav-link active" onclick="switchView('discover')">Discover</a>
+                <a href="#" class="nav-link active" onclick="switchView('discover')">Recipe Matcher</a>
                 <a href="#" class="nav-link" onclick="switchView('saved')">Saved Recipes</a>
-                <a href="#" class="nav-link" onclick="switchView('settings')">Settings</a>
+                <a href="#" class="nav-link" onclick="switchView('settings')">Preferences</a>
             </nav>
         </aside>
 
         <main class="main-container">
             <header class="content-header">
-                <div class="header-titles">
-                    <h1>Explore Cuisine</h1>
-                    <p>Curated professional recipes for your collection.</p>
+                <h1>Smart Matcher</h1>
+                <p>Enter your available ingredients to find matching professional recipes.</p>
+                
+                <div class="input-section">
+                    <div class="search-bar">
+                        <input type="text" id="ingredientInput" placeholder="Add ingredient (e.g. Chicken, Tomato)...">
+                        <button class="btn-primary" onclick="addIngredient()">Add</button>
+                    </div>
+                    <div id="myIngredients" class="inventory-tags"></div>
                 </div>
-                <div class="search-bar">
-                    <input type="text" id="recipeSearch" placeholder="Search by name or ingredient...">
-                    <button class="btn-primary" onclick="search()">Search</button>
-                </div>
-                <div class="filter-pills">
-                    <button class="pill active">All</button>
-                    <button class="pill">Breakfast</button>
-                    <button class="pill">Main Course</button>
-                    <button class="pill">Sides</button>
+
+                <div class="filter-controls">
+                    <select id="timeFilter" onchange="runMatching()">
+                        <option value="all">Any Cooking Time</option>
+                        <option value="30">Under 30 mins</option>
+                        <option value="60">Under 60 mins</option>
+                    </select>
+                    <div id="preferenceDisplay" class="pref-badge"></div>
                 </div>
             </header>
 
@@ -46,12 +51,11 @@
         </main>
 
         <nav class="mobile-nav">
-            <button class="mobile-tab active" onclick="switchView('discover')">Explore</button>
+            <button class="mobile-tab active" onclick="switchView('discover')">Match</button>
             <button class="mobile-tab" onclick="switchView('saved')">Saved</button>
-            <button class="mobile-tab" onclick="switchView('settings')">Profile</button>
+            <button class="mobile-tab" onclick="switchView('settings')">Prefs</button>
         </nav>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
