@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 [ApiController]
@@ -22,14 +22,17 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
-            return BadRequest("Email already exists.");
+            return Conflict("Email already exists.");
 
         var user = new User
         {
-            Username = dto.Username,
-            Email = dto.Email,
-            PasswordHash = HashPassword(dto.Password)
+            Username = dto.Username.Trim(),
+            Email = dto.Email.Trim().ToLower(),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
         };
 
         _db.Users.Add(user);
@@ -40,18 +43,17 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-        if (user == null || user.PasswordHash != HashPassword(dto.Password))
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var user = await _db.Users.FirstOrDefaultAsync(
+            u => u.Email == dto.Email.Trim().ToLower());
+
+        if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized("Invalid email or password.");
 
         var token = GenerateJwtToken(user);
-        return Ok(new { token });
-    }
-
-    private string HashPassword(string password)
-    {
-        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-        return Convert.ToBase64String(bytes);
+        return Ok(new { token, userId = user.Id, username = user.Username });
     }
 
     private string GenerateJwtToken(User user)
@@ -62,7 +64,8 @@ public class AuthController : ControllerBase
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.Username)
         };
         var token = new JwtSecurityToken(
             claims: claims,
@@ -72,5 +75,13 @@ public class AuthController : ControllerBase
     }
 }
 
-public record RegisterDto(string Username, string Email, string Password);
-public record LoginDto(string Email, string Password);
+public record RegisterDto(
+    [Required, StringLength(50, MinimumLength = 2)] string Username,
+    [Required, EmailAddress] string Email,
+    [Required, StringLength(100, MinimumLength = 8)] string Password
+);
+
+public record LoginDto(
+    [Required, EmailAddress] string Email,
+    [Required] string Password
+);
