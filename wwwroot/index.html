@@ -3,90 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Recipe Finder</title>
+  <title>Recipe Finder API</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <nav>
-  <span class="logo">Recipe Finder</span>
+  <span class="logo">Recipe Finder API</span>
   <div id="nav-links">
     <a href="#" onclick="showPage('search')">Search</a>
     <a href="#" onclick="showPage('favorites')">Favorites</a>
     <a href="#" onclick="showPage('preferences')">Preferences</a>
-    <a href="#" onclick="logout()">Logout</a>
   </div>
 </nav>
 
-<!-- Login Page -->
-<div id="page-login" class="page active">
-  <div class="card auth-card">
-    <h2>Welcome Back</h2>
-    <input type="email" id="login-email" placeholder="Email" />
-    <input type="password" id="login-password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p>No account? <a href="#" onclick="showPage('register')">Register</a></p>
-    <p id="login-error" class="error"></p>
-  </div>
-</div>
+<main class="container">
 
-<!-- Register Page -->
-<div id="page-register" class="page">
-  <div class="card auth-card">
-    <h2>Create Account</h2>
-    <input type="text" id="reg-username" placeholder="Username" />
-    <input type="email" id="reg-email" placeholder="Email" />
-    <input type="password" id="reg-password" placeholder="Password" />
-    <button onclick="register()">Register</button>
-    <p>Have an account? <a href="#" onclick="showPage('login')">Login</a></p>
-    <p id="reg-error" class="error"></p>
-  </div>
-</div>
+  <div id="page-search" class="page active">
+    <section class="search-panel">
+      <div class="search-row">
+        <input type="text" id="search-query" placeholder="Search recipes (e.g. Garlic)..." />
+        <button class="btn-main" onclick="searchRecipes()">Search</button>
+      </div>
+      
+      <div class="filter-row">
+        <input type="text" id="ingredients" placeholder="Ingredients" />
+        <input type="text" id="dietary" placeholder="Dietary Type" />
+        <input type="text" id="cuisine" placeholder="Cuisine" />
+        <div class="btn-group">
+          <button class="btn-main" onclick="filterRecipes()">Filter</button>
+          <button class="btn-main" onclick="getRandom()">Random</button>
+        </div>
+      </div>
+    </section>
 
-<!-- Search Page -->
-<div id="page-search" class="page">
-  <div class="search-bar">
-    <input type="text" id="search-query" placeholder="Search recipes..." />
-    <button onclick="searchRecipes()">Search</button>
+    <div id="recipe-results" class="grid"></div>
   </div>
-  <div class="filter-bar">
-    <input type="text" id="ingredients" placeholder="Ingredients (e.g. chicken, garlic)" />
-    <input type="text" id="dietary" placeholder="Dietary (e.g. vegetarian)" />
-    <input type="text" id="cuisine" placeholder="Cuisine (e.g. Italian)" />
-    <button onclick="filterRecipes()">Filter</button>
-    <button onclick="getRandom()">Random</button>
+
+  <div id="page-detail" class="page">
+    <button onclick="showPage('search')" class="back-btn">← Back to Search</button>
+    <div id="recipe-detail" class="detail-card"></div>
   </div>
-  <div id="recipe-results" class="grid"></div>
-</div>
 
-<!-- Detail Page -->
-<div id="page-detail" class="page">
-  <button onclick="showPage('search')" class="back-btn">Back</button>
-  <div id="recipe-detail"></div>
-</div>
-
-<!-- Favorites Page -->
-<div id="page-favorites" class="page">
-  <h2>My Favorites</h2>
-  <div id="favorites-list" class="grid"></div>
-</div>
-
-<!-- Preferences Page -->
-<div id="page-preferences" class="page">
-  <div class="card" style="max-width:500px;margin:2rem auto">
-    <h2>My Preferences</h2>
-    <label>Dietary Type</label>
-    <input type="text" id="pref-dietary" placeholder="e.g. vegetarian, vegan" />
-    <label>Excluded Ingredients</label>
-    <input type="text" id="pref-excluded" placeholder="e.g. nuts, dairy" />
-    <label>Preferred Cuisine</label>
-    <input type="text" id="pref-cuisine" placeholder="e.g. Italian, Asian" />
-    <label>Max Cooking Time (minutes)</label>
-    <input type="number" id="pref-time" placeholder="e.g. 30" />
-    <button onclick="savePreferences()">Save Preferences</button>
-    <p id="pref-msg" class="success"></p>
+  <div id="page-favorites" class="page">
+    <h2 class="section-title">Saved Favorites</h2>
+    <div id="favorites-list" class="grid"></div>
   </div>
-</div>
+
+  <div id="page-preferences" class="page">
+    <div class="card pref-card">
+      <h2>User Preferences</h2>
+      <div class="input-group">
+        <label>Dietary Type</label>
+        <input type="text" id="pref-dietary" placeholder="e.g. vegetarian" />
+        
+        <label>Excluded Ingredients</label>
+        <input type="text" id="pref-excluded" placeholder="e.g. nuts" />
+        
+        <label>Preferred Cuisine</label>
+        <input type="text" id="pref-cuisine" placeholder="e.g. Italian" />
+        
+        <label>Max Cooking Time (mins)</label>
+        <input type="number" id="pref-time" placeholder="30" />
+        
+        <button class="btn-main" onclick="savePreferences()">Save Settings</button>
+      </div>
+      <p id="pref-msg" class="success-text"></p>
+    </div>
+  </div>
+
+</main>
 
 <script src="app.js"></script>
 </body>
